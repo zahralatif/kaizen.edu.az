@@ -153,17 +153,17 @@ button {
     outline: rgb(252, 146, 39) solid 1px !important;
 }
 
-.lang__changer {
+/* .lang__changer {
     font-size: var(--h1-font-size);
     display: flex;
     justify-content: center;
 }
 
 .lang__changer:hover {
-    color: var(--button-color);
+    color: var(--first-color);
     transition: all .3s ease 0s;
     cursor: pointer;
-}
+} */
 
 .nav__list {
     display: flex;
@@ -179,7 +179,7 @@ button {
 }
 
 .nav__link:hover {
-    color: var(--button-color);
+    color: var(--first-color);
     transition: all .3s ease 0s;
 }
 
@@ -730,7 +730,7 @@ button {
     flex-direction: column;
 }
 
-/* Services */
+/* Page 3 : Services */
 
 .services__page {
     background-color: var(--body-color);
@@ -747,7 +747,7 @@ button {
     opacity: 1;
 }
 
-/* Contact */
+/* Page 4 : Contact */
 
 .contact-info {
     position: relative;
@@ -780,7 +780,6 @@ button {
 }
 
 .contact-info ul li::after {
-    -webkit-transition-duration: 600ms;
     transition-duration: 600ms;
     position: absolute;
     width: 100%;
@@ -788,7 +787,6 @@ button {
     content: "";
     top: 110%;
     left: 50%;
-    -webkit-transform: translateX(-50%);
     transform: translateX(-50%);
     z-index: -1;
     background: rgb(252, 146, 39);
@@ -832,8 +830,6 @@ button {
 
 .contact-info__icon i {
     display: block;
-    -webkit-transition: all 0.6s ease;
-    -o-transition: all 0.6s ease;
     transition: all 0.6s ease;
 }
 
@@ -997,6 +993,10 @@ button {
         justify-content: flex-end;
     }
 
+    .nav__item:nth-child(1) {
+        width: 5.3rem;
+    }
+
     .header__container {
         display: flex;
         justify-content: space-between;
@@ -1054,7 +1054,7 @@ button {
 }
 
 @media (max-width: 991px) {
-    
+
     .contact-info ul li {
         width: 100%;
     }

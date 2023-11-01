@@ -37,11 +37,6 @@
   <body>
     <!-- Navbar Start -->
     <nav class="nav">
-      <div class="nav__buttons">
-        <div class="nav__toggle" id="nav-toggle">
-          <i class="bx bx-menu"></i>
-        </div>
-      </div>
       <a href="index.html" class="nav__logo">
         <div class="nav__logo--img">
           <img src="./assets/images/Kaizen TM-logo.png" alt="" />
@@ -50,30 +45,38 @@
       <section class="nav__menu" id="nav-menu">
         <ul class="nav__list">
           <li class="nav__item">
-            <a href="index.html" class="nav__link">Home</a>
+            <a href="index.html" class="nav__link nav__link--home"
+              >Ana Səhifə</a
+            >
           </li>
           <li class="nav__item">
-            <a href="about.html" class="nav__link">About</a>
+            <a href="about.html" class="nav__link">Haqqımızda</a>
           </li>
           <li class="nav__item">
-            <a href="services.html" class="nav__link">Services</a>
+            <a href="services.html" class="nav__link">Xidmətlərimiz</a>
           </li>
           <li class="nav__item nav__item--contact">
-            <a href="contact.html" class="nav__link">Contact</a>
+            <a href="contact.html" class="nav__link">Bizimlə əlaqə</a>
           </li>
         </ul>
         <div class="nav__buttons">
-          <a href="contact.html" class="contact__button button">Contact</a>
+          <a href="contact.html" class="contact__button button">Əlaqə</a>
         </div>
       </section>
-      <div class="lang__changer" id="lang-changer">
-        <i class="bx bx-world"></i>
+
+      <div class="nav__buttons">
+        <div class="nav__toggle" id="nav-toggle">
+          <i class="bx bx-menu"></i>
+        </div>
       </div>
+      <!-- <div class="lang__changer" id="lang-changer">
+          <i class="bx bx-world"></i>
+        </div> -->
     </nav>
 
     <header class="services__page__header section">
       <div class="services__page__container">
-        <h1 class="services__page__title">Services</h1>
+        <h1 class="services__page__title">Xidmətlərimiz</h1>
       </div>
     </header>
 
@@ -82,14 +85,13 @@
       <section class="services__page section" id="services">
         <div class="services__cards">
           <ul class="services__list">
-            
             <li class="services__item services__page--item">
               <div class="services__link">
                 <div class="services__item--img">
                   <img src="./assets/images/JVD-4987.jpg" alt="" />
                 </div>
                 <div class="services__item__info">
-                  <h3 class="services__item__title">Preperation groups</h3>
+                  <h3 class="services__item__title">Məktəbəqədər hazırlığı</h3>
                   <p class="services__description">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Voluptatem, expedita! Lorem ipsum dolor sit amet consectetur
@@ -108,7 +110,7 @@
                   <img src="./assets/images/JVD-4987.jpg" alt="" />
                 </div>
                 <div class="services__item__info">
-                  <h3 class="services__item__title">Preperation groups</h3>
+                  <h3 class="services__item__title">İbtidai sinif hazırlığı</h3>
                   <p class="services__description">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Voluptatem, expedita! Lorem ipsum dolor sit amet consectetur
@@ -127,7 +129,9 @@
                   <img src="./assets/images/JVD-4987.jpg" alt="" />
                 </div>
                 <div class="services__item__info">
-                  <h3 class="services__item__title">Preperation groups</h3>
+                  <h3 class="services__item__title">
+                    Təkmilləşdirmə hazırlığı
+                  </h3>
                   <p class="services__description">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Voluptatem, expedita! Lorem ipsum dolor sit amet consectetur
@@ -146,7 +150,7 @@
                   <img src="./assets/images/JVD-4987.jpg" alt="" />
                 </div>
                 <div class="services__item__info">
-                  <h3 class="services__item__title">Preperation groups</h3>
+                  <h3 class="services__item__title">Liseylərə hazırlıq</h3>
                   <p class="services__description">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Voluptatem, expedita! Lorem ipsum dolor sit amet consectetur
@@ -165,7 +169,9 @@
                   <img src="./assets/images/JVD-4987.jpg" alt="" />
                 </div>
                 <div class="services__item__info">
-                  <h3 class="services__item__title">Preperation groups</h3>
+                  <h3 class="services__item__title">
+                    Buraxılış imtahanı hazırlığı
+                  </h3>
                   <p class="services__description">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Voluptatem, expedita! Lorem ipsum dolor sit amet consectetur
@@ -184,7 +190,7 @@
                   <img src="./assets/images/JVD-4987.jpg" alt="" />
                 </div>
                 <div class="services__item__info">
-                  <h3 class="services__item__title">Preperation groups</h3>
+                  <h3 class="services__item__title">Abituriyent hazırlığı</h3>
                   <p class="services__description">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Voluptatem, expedita! Lorem ipsum dolor sit amet consectetur
@@ -203,7 +209,7 @@
                   <img src="./assets/images/JVD-4987.jpg" alt="" />
                 </div>
                 <div class="services__item__info">
-                  <h3 class="services__item__title">Preperation groups</h3>
+                  <h3 class="services__item__title">Xarici dil hazırlığı</h3>
                   <p class="services__description">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Voluptatem, expedita! Lorem ipsum dolor sit amet consectetur
@@ -222,7 +228,7 @@
                   <img src="./assets/images/JVD-4987.jpg" alt="" />
                 </div>
                 <div class="services__item__info">
-                  <h3 class="services__item__title">Preperation groups</h3>
+                  <h3 class="services__item__title">Steam</h3>
                   <p class="services__description">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Voluptatem, expedita! Lorem ipsum dolor sit amet consectetur
@@ -241,7 +247,7 @@
                   <img src="./assets/images/JVD-4987.jpg" alt="" />
                 </div>
                 <div class="services__item__info">
-                  <h3 class="services__item__title">Preperation groups</h3>
+                  <h3 class="services__item__title">Robotexnika</h3>
                   <p class="services__description">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Voluptatem, expedita! Lorem ipsum dolor sit amet consectetur
@@ -260,7 +266,7 @@
                   <img src="./assets/images/JVD-4987.jpg" alt="" />
                 </div>
                 <div class="services__item__info">
-                  <h3 class="services__item__title">Preperation groups</h3>
+                  <h3 class="services__item__title">Kompüter kursları</h3>
                   <p class="services__description">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Voluptatem, expedita! Lorem ipsum dolor sit amet consectetur
@@ -279,7 +285,9 @@
                   <img src="./assets/images/JVD-4987.jpg" alt="" />
                 </div>
                 <div class="services__item__info">
-                  <h3 class="services__item__title">Preperation groups</h3>
+                  <h3 class="services__item__title">
+                    Rəsm və Şahmat dərnəkləri
+                  </h3>
                   <p class="services__description">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Voluptatem, expedita! Lorem ipsum dolor sit amet consectetur
@@ -298,7 +306,7 @@
                   <img src="./assets/images/JVD-4987.jpg" alt="" />
                 </div>
                 <div class="services__item__info">
-                  <h3 class="services__item__title">Preperation groups</h3>
+                  <h3 class="services__item__title">Gimnastika</h3>
                   <p class="services__description">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Voluptatem, expedita! Lorem ipsum dolor sit amet consectetur
@@ -392,13 +400,13 @@
           </ul>
         </div>
 
-        <p class="footer__copyright">&copy; Kaizen Education Center</p>
+        <p class="footer__copyright">&copy; Kaizen Təhsil Mərkəzi</p>
       </div>
     </footer>
 
     <div class="scrollup" id="scroll-up">
       <!-- <a href="https://www.linkedin.com/in/zahra-latif/" class="author">
-        <b>Website created by:</b> Zəhra Lətif
+        <b>Səhifəni hazırladı:</b> Zəhra Lətif
       </a> -->
 
       <a href="#" class="scroll">
