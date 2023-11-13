@@ -111,19 +111,6 @@
           </li>          
         </ul>
 
-        <!-- Right navbar links -->
-        <!-- <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                  <a
-                    class="nav-link"
-                    data-widget="navbar-search"
-                    href="#"
-                    role="button"
-                  >
-                    <i class="fas fa-search"></i>
-                  </a>
-                </li>
-              </ul> -->
       </nav>
       <!-- /.navbar -->
 
@@ -220,16 +207,16 @@
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-            <form action="op/add_actor.php" method="post" role="form">
+            <form>
               <div class="card-body">
                 <div class="form-group">
-                  <label for="exampleInputEmail1">Adı</label>
+                  <label for="exampleInputEmail1">Text</label>
                   <input
                     required=""
                     name="name"
                     type="text"
                     class="form-control"
-                    id="exampleInputEmail1"
+                    id="navbar-link-text"
                     placeholder="Adını Daxil Edin"
                   />
                 </div>
@@ -240,14 +227,14 @@
                     name="name"
                     type="text"
                     class="form-control"
-                    id="exampleInputEmail1"
+                    id="navbar-link-path"
                     placeholder="Linkini Daxil Edin"
                   />
                 </div>
               </div>
 
               <div class="card-footer">
-                <button name="add_actor" type="submit" class="btn btn-primary">
+                <button id="add-navbar-link" class="btn btn-primary">
                   Əlavə Et
                 </button>
                 <a href="../" class="btn btn-danger"> Geri Qayıt</a>
@@ -267,6 +254,44 @@
       </footer>
     </div>
 
+    <script type="module" src="../../../assets/js/firebase.js"></script>
+    <script src="../../../assets/js/uuid.js"></script>
+
+
+    
+    <script type="module">
+      import {getDatabase, set, get, update, remove , ref} from "https://www.gstatic.com/firebasejs/10.6.0/firebase-database.js";
+
+      const db = getDatabase();
+
+
+      let id = customId();
+      let linkName = document.querySelector("#navbar-link-text");
+      let linkPath = document.querySelector("#navbar-link-path");
+
+      let addNavbarLink = document.querySelector("#add-navbar-link");
+  
+
+      function InsertData() {
+        event.preventDefault();
+          set(ref(db, "navbar/"+ id),{
+              Name: linkName.value,
+              ID: id,
+              Age: linkPath.value
+          })
+          .then(()=>{
+              alert("Data uğurla əlavə edildi!");
+              location.href = '../';
+
+          })
+          .catch((error)=>{
+              alert(error);
+          });
+      }
+
+
+      addNavbarLink.addEventListener('click', InsertData);
+  </script>
     <!-- jQuery -->
     <script src="../../plugins/jquery/jquery.min.js"></script>
     <!-- jQuery UI 1.11.4 -->
@@ -315,7 +340,10 @@
     <script src="../../plugins/datatables-buttons/js/buttons.html5.min.js"></script>
     <script src="../../plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="../../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
-    <script type="module" src="../../../assets/js/firebase.js"></script>
+
+
+
+
     <script>
       $(function () {
         $("#example1")
