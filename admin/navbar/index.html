@@ -172,46 +172,9 @@
                                 <th>Əməliyatlar</th>
                               </tr>
                             </thead>
-                            <tbody>
-                              <tr>
-                                <td>Ana Səhifə</td>
-                                <td style="width: 23%" class="project-actions text-center">
-                                  <a class="btn btn-info btn-sm" href="./edit/">
-                                    <i class="fas fa-pencil-alt"> </i>
-                                    Düzəliş et
-                                  </a>
-                                  <a class="btn btn-danger btn-sm" href="./delete/">
-                                    <i class="fas fa-trash"> </i>
-                                    Sil
-                                  </a>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>Haqqımızda</td>
-                                <td style="width: 23%" class="project-actions text-center">
-                                  <a class="btn btn-info btn-sm" href="./edit">
-                                    <i class="fas fa-pencil-alt"> </i>
-                                    Düzəliş et
-                                  </a>
-                                  <a class="btn btn-danger btn-sm" href="./delete/">
-                                    <i class="fas fa-trash"> </i>
-                                    Sil
-                                  </a>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>Xidmətlərimiz</td>
-                                <td style="width: 23%" class="project-actions text-center">
-                                  <a class="btn btn-info btn-sm" href="./edit">
-                                    <i class="fas fa-pencil-alt"> </i>
-                                    Düzəliş et
-                                  </a>
-                                  <a class="btn btn-danger btn-sm" href="./delete/">
-                                    <i class="fas fa-trash"> </i>
-                                    Sil
-                                  </a>
-                                </td>
-                              </tr>
+                            <tbody id="nav-table">
+
+
                             </tbody>
                             <tfoot>
                               <tr>
@@ -248,9 +211,10 @@
     import { getDatabase, set, get, update, remove, ref } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-database.js";
 
     const db = getDatabase();
-    let formattedData=[];
+    let formattedData = [];
 
     const navRef = ref(db, "navbar");
+    const tbody = document.querySelector('#nav-table')
 
     get(navRef)
       .then((snapshot) => {
@@ -260,6 +224,23 @@
           formattedData = formatData(navData);
           console.log(formattedData);
 
+          const rowsHTML = formattedData.map((item) => `
+        <tr>
+          <td>${item.name}</td>
+          <td style="width: 23%" class="project-actions text-center">
+            <a class="btn btn-info btn-sm" href="./edit/${item.id}">
+              <i class="fas fa-pencil-alt"> </i>
+              Düzəliş et
+            </a>
+            <a class="btn btn-danger btn-sm" href="./delete/${item.id}">
+              <i class="fas fa-trash"> </i>
+              Sil
+            </a>
+          </td>
+        </tr>
+      `).join('');
+          console.log(rowsHTML);
+          tbody.innerHTML = rowsHTML;
         } else {
           console.log("no data");
         }
@@ -267,6 +248,7 @@
       .catch((error) => {
         console.error(error);
       });
+
 
   </script>
 
