@@ -8,21 +8,26 @@ navToggle.addEventListener('click', () => {
 
 });
 
-const items = document.querySelectorAll('.accordion button');
+function accordion() {
+    const items = document.querySelectorAll('.accordion button');
 
-function toggleAccordion() {
-    const itemToggle = this.getAttribute('aria-expanded');
+    function toggleAccordion() {
+        const itemToggle = this.getAttribute('aria-expanded');
 
-    for (i = 0; i < items.length; i++) {
-        items[i].setAttribute('aria-expanded', 'false');
+        for (i = 0; i < items.length; i++) {
+            items[i].setAttribute('aria-expanded', 'false');
+        }
+
+        if (itemToggle == 'false') {
+            this.setAttribute('aria-expanded', 'true');
+        }
     }
+    console.log(items);
 
-    if (itemToggle == 'false') {
-        this.setAttribute('aria-expanded', 'true');
-    }
+    items.forEach((item) => item.addEventListener('click', toggleAccordion));
 }
-
-items.forEach((item) => item.addEventListener('click', toggleAccordion));
+accordion();
+setTimeout(accordion(),2000);
 
 const scrollUp = () => {
     const scrollUp = document.getElementById('scroll-up')

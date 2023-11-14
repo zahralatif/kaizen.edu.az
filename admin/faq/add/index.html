@@ -280,17 +280,17 @@
       const db = getDatabase();
 
       let id = customId();
-      let linkName = document.querySelector("#faq-link-question");
-      let linkPath = document.querySelector("#faq-link-answer");
+      let linkQuestion = document.querySelector("#faq-link-question");
+      let linkAnswer = document.querySelector("#faq-link-answer");
 
       let addFaqLink = document.querySelector("#add-faq-link");
 
       function InsertData() {
         event.preventDefault();
         set(ref(db, "faq/" + id), {
-          Name: linkName.value,
+          Question: linkQuestion.value,
           ID: id,
-          Link: linkPath.value,
+          Answer: linkAnswer.value,
         })
           .then(() => {
             alert("Data uğurla əlavə edildi!");

@@ -220,62 +220,7 @@
       <section class="faq section" id="faq">
         <div class="faq__section">
           <h1 class="faq__title">Ən çox verilən suallar</h1>
-          <div class="accordion faq__cards">
-            <div class="accordion-item faq__item">
-              <button id="accordion-button-1" aria-expanded="false">
-                <span class="accordion-title">Lorem ipsum dolor sit amet.</span>
-                <span class="icon" aria-hidden="true"></span>
-              </button>
-              <div class="accordion-content">
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta
-                  unde tenetur ratione nobis quibusdam repudiandae libero, at
-                  omnis laborum exercitationem.
-                </p>
-              </div>
-            </div>
-            <div class="accordion-item faq__item">
-              <button id="accordion-button-2" aria-expanded="false">
-                <span class="accordion-title"
-                  >Lorem ipsum dolor sit amet.
-                </span>
-                <span class="icon" aria-hidden="true"></span>
-              </button>
-              <div class="accordion-content">
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Consequuntur alias ut temporibus facilis atque explicabo quam
-                  facere quisquam ex deserunt.
-                </p>
-              </div>
-            </div>
-            <div class="accordion-item faq__item">
-              <button id="accordion-button-3" aria-expanded="false">
-                <span class="accordion-title">Lorem ipsum dolor sit amet.</span>
-                <span class="icon" aria-hidden="true"></span>
-              </button>
-              <div class="accordion-content">
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni
-                  dolor provident amet vel minus similique illo odio nesciunt
-                  animi quis?
-                </p>
-              </div>
-            </div>
-            <div class="accordion-item faq__item">
-              <button id="accordion-button-4" aria-expanded="false">
-                <span class="accordion-title">Lorem ipsum dolor sit amet.</span>
-                <span class="icon" aria-hidden="true"></span>
-              </button>
-              <div class="accordion-content">
-                <p>
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                  Placeat assumenda quos ipsum exercitationem atque maiores
-                  molestiae nisi nemo, enim quasi!
-                </p>
-              </div>
-            </div>
-          </div>
+          <div class="accordion faq__cards"></div>
         </div>
       </section>
     </main>
@@ -371,7 +316,65 @@
       </a>
     </div>
 
-    <script src="./assets/js/main.js"></script>
     <!-- <script type="module" src="./assets/js/firebase.js"></script> -->
+
+    <script type="module" src="../../assets/js/firebase.js"></script>
+    <script src="../../assets/js/converter.js"></script>
+
+    <script type="module">
+      import {
+        getDatabase,
+        set,
+        get,
+        update,
+        remove,
+        ref,
+      } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-database.js";
+
+      const db = getDatabase();
+      let formattedData = [];
+
+      const faqRef = ref(db, "faq");
+      let faqCard = document.querySelector(".faq__cards");
+
+      function formatData(faqData) {
+        return Object.keys(faqData).map((key) => {
+          return { ID: key, ...faqData[key] };
+        });
+      }
+      get(faqRef)
+        .then((snapshot) => {
+          if (snapshot.val() !== null) {
+            const faqData = snapshot.val();
+            console.log(faqData);
+            formattedData = formatData(faqData);
+            console.log(formattedData);
+
+            const rowsHTML = formattedData
+              .map(
+                (item) => `
+                <div class="accordion-item faq__item">
+              <button id="accordion-button-${item.ID}" aria-expanded="false">
+                <span class="accordion-title">${item.Question}</span>
+                <span class="icon" aria-hidden="true"></span>
+              </button>
+              <div class="accordion-content">
+                <p>${item.Answer}</p>
+              </div>
+            </div>
+      `
+              )
+              .join("");
+            console.log(rowsHTML);
+            faqCard.innerHTML = rowsHTML;
+          } else {
+            console.log("no data");
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    </script>
+    <script src="./assets/js/main.js"></script>
   </body>
 </html>

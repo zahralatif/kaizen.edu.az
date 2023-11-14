@@ -287,8 +287,8 @@
       const urlParams = new URLSearchParams(window.location.search);
       const id = urlParams.get("id");
       console.log(id);
-      let linkName = document.querySelector("#faq-link-question");
-      let linkPath = document.querySelector("#faq-link-answer");
+      let linkQuestion = document.querySelector("#faq-link-question");
+      let linkAnswer = document.querySelector("#faq-link-answer");
       let editFaqLink = document.querySelector("#edit-faq-link");
 
       const faqRef = ref(db, `faq/${id}`);
@@ -296,8 +296,8 @@
         .then((snapshot) => {
           if (snapshot.exists()) {
             const faqData = snapshot.val();
-            linkName.value = faqData.Name || "";
-            linkPath.value = faqData.Link || "";
+            linkQuestion.value = faqData.Question || "";
+            linkAnswer.value = faqData.Answer || "";
           }
         })
         .catch((error) => {
@@ -307,9 +307,9 @@
       function UpdateData() {
         event.preventDefault();
         set(ref(db, "faq/" + id), {
-          Name: linkName.value,
+          Question: linkQuestion.value,
           ID: id,
-          Link: linkPath.value,
+          Answer: linkAnswer.value,
         })
           .then(() => {
             alert("Data uğurla yeniləndi!");
