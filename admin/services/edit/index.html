@@ -220,7 +220,7 @@
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-            <form action="op/add_actor.php" method="post" role="form">
+            <form action="" method="post" role="form">
               <div class="card-body">
                 <div class="form-group">
                   <label for="exampleInputEmail1">Adı</label>
@@ -229,21 +229,21 @@
                     name="name"
                     type="text"
                     class="form-control"
-                    id="exampleInputEmail1"
+                    id="services-link-name"
                     placeholder="Adını Daxil Edin"
                   />
                 </div>
                 <div class="form-group">
-                  <label for="exampleInputFile">File input</label>
+                  <label for="exampleInputFile">Xidmətin şəkili</label>
                   <div class="input-group">
                     <div class="custom-file">
                       <input
                         type="file"
                         class="custom-file-input"
-                        id="exampleInputFile"
+                        id="services-link-file"
                       />
                       <label class="custom-file-label" for="exampleInputFile"
-                        >Choose file</label
+                        >Xidmət şəkili</label
                       >
                     </div>
                   </div>
@@ -255,15 +255,15 @@
                     name="name"
                     type="text"
                     class="form-control"
-                    id="exampleInputEmail1"
+                    id="services-link-description"
                     placeholder="Açıqlamanı Daxil Edin"
                   />
                 </div>
               </div>
 
               <div class="card-footer">
-                <button name="add_actor" type="submit" class="btn btn-primary">
-                  Əlavə Et
+                <button name="add_actor" id="edit-services-link" type="submit" class="btn btn-primary">
+                  Düzəliş Et
                 </button>
                 <a href="../" class="btn btn-danger"> Geri Qayıt</a>
               </div>
@@ -278,6 +278,63 @@
         </div>
       </footer>
     </div>
+
+    <script type="module" src="../../../assets/js/firebase.js"></script>
+    <script src="../../../assets/js/uuid.js"></script>
+
+    <script type="module">
+      import {
+        getDatabase,
+        set,
+        get,
+        update,
+        remove,
+        ref,
+      } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-database.js";
+
+      const db = getDatabase();
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const id = urlParams.get("id");
+      console.log(id);
+      let linkName = document.querySelector("#services-link-name");
+      let linkFile = document.querySelector("#services-link-file");
+      let linkDescription = document.querySelector("#services-link-description")
+      let editServicesLink = document.querySelector("#edit-services-link");
+
+      const servicesRef = ref(db, `services/${id}`);
+      get(servicesRef)
+        .then((snapshot) => {
+          if (snapshot.exists()) {
+            const servicesData = snapshot.val();
+            linkName.value = servicesData.Name || "";
+            linkFile.value = servicesData.File || "";
+            linkDescription.value = servicesData.Description || "";
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+
+      function UpdateData() {
+        event.preventDefault();
+        set(ref(db, "services/" + id), {
+          Name: linkName.value,
+          ID: id,
+          File: linkFile.value,
+          Description: linkDescription.value,
+        })
+          .then(() => {
+            alert("Data uğurla yeniləndi!");
+            location.href = "../";
+          })
+          .catch((error) => {
+            alert(error);
+          });
+      }
+
+      editServicesLink.addEventListener("click", UpdateData);
+    </script>
 
     <!-- jQuery -->
     <script src="../../plugins/jquery/jquery.min.js"></script>
@@ -327,7 +384,6 @@
     <script src="../../plugins/datatables-buttons/js/buttons.html5.min.js"></script>
     <script src="../../plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="../../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
-    <script type="module" src="../../../assets/js/firebase.js"></script>
     <script>
       $(function () {
         $("#example1")

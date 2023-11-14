@@ -5,7 +5,7 @@ function formatData(data) {
     for (const key in data) {
       const item = data[key];
       formattedData.push({
-        Age: item.Age,
+        Link: item.Link,
         ID: item.ID,
         Name: item.Name,
       });

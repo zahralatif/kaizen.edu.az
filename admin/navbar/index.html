@@ -285,73 +285,72 @@
       let formattedData = [];
 
       const navRef = ref(db, "navbar");
-
-      // get(navRef)
-      //   .then((snapshot) => {
-      //     if (snapshot.val() !== null) {
-      //       const navData = snapshot.val();
-      //       console.log(navData);
-      //       formattedData = formatData(navData);
-      //       console.log(formattedData);
-      //       
-      //       let mapData = formattedData.map((item) => {
-      //         let tr = document.createElement("tr");
-      //         tr.innerHTML = `<td >${item.Name}</td>
-      //                           <td style="width: 23%" class="project-actions text-center">
-      //                             <a class="btn btn-info btn-sm" href="./edit/#${item.ID}" >
-      //                               <i class="fas fa-pencil-alt"> </i>
-      //                               Düzəliş et
-      //                             </a>
-      //                             <a class="btn btn-danger btn-sm" href="./delete/#${item.ID}">
-      //                               <i class="fas fa-trash"> </i>
-      //                               Sil
-      //                             </a>
-      //                           </td>
-      //                         `;
-      //         navTable.appendChild(tr);
-      //       });
-      //     } else {
-      //       console.log("no data");
-      //     }
-      //   })
-      //   .catch((error) => {
-      //     console.error(error);
-      //   });
       let navTable = document.querySelector("#nav_table");
+      var removeBtn = document.querySelector("#remove");
+      var updateBtn = document.querySelector("#update");
 
-        get(navRef)
-      .then((snapshot) => {
-        if (snapshot.val() !== null) {
-          const navData = snapshot.val();
-          console.log(navData);
-          formattedData = formatData(navData);
-          console.log(formattedData);
+      function formatData(navData) {
+        return Object.keys(navData).map((key) => {
+          return { ID: key, ...navData[key] };
+        });
+      }
+      get(navRef)
+        .then((snapshot) => {
+          if (snapshot.val() !== null) {
+            const navData = snapshot.val();
+            console.log(navData);
+            formattedData = formatData(navData);
+            console.log(formattedData);
 
-          const rowsHTML = formattedData.map((item) => `
+            const rowsHTML = formattedData
+              .map(
+                (item) => `
         <tr>
           <td>${item.Name}</td>
           <td style="width: 23%" class="project-actions text-center">
-            <a class="btn btn-info btn-sm" href="./edit/${item.ID}">
+            <a class="btn btn-info btn-sm" id="update" href="./edit/?id=${item.ID}">
               <i class="fas fa-pencil-alt"> </i>
               Düzəliş et
             </a>
-            <a class="btn btn-danger btn-sm" href="./delete/${item.ID}">
+            <a class="btn btn-danger btn-sm" id="remove" href="#" data-id="${item.ID}">
               <i class="fas fa-trash"> </i>
               Sil
             </a>
           </td>
         </tr>
-      `).join('');
-          console.log(rowsHTML);
-          navTable.innerHTML = rowsHTML;
-        } else {
-          console.log("no data");
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+      `
+              )
+              .join("");
+            console.log(rowsHTML);
+            navTable.innerHTML = rowsHTML;
 
+            document.querySelectorAll("#remove").forEach((btn) => {
+              btn.addEventListener("click", (event) => {
+                const id = btn.getAttribute("data-id");
+                RemoveData(id);
+              });
+            });
+          } else {
+            console.log("no data");
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+
+      function RemoveData(id) {
+        remove(ref(db, `navbar/${id}`))
+          .then(() => {
+            const row = document
+              .querySelector(`#remove[data-id="${id}"]`)
+              .closest("tr");
+            row.remove();
+            alert("Data uğurla silindi");
+          })
+          .catch((error) => {
+            alert(error);
+          });
+      }
     </script>
 
     <!-- jQuery -->

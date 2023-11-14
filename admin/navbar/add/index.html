@@ -108,9 +108,8 @@
             <a class="nav-link" data-widget="pushmenu" href="#" role="button"
               ><i class="fas fa-bars"></i
             ></a>
-          </li>          
+          </li>
         </ul>
-
       </nav>
       <!-- /.navbar -->
 
@@ -210,7 +209,7 @@
             <form>
               <div class="card-body">
                 <div class="form-group">
-                  <label for="exampleInputEmail1">Text</label>
+                  <label for="exampleInputEmail1">Adı</label>
                   <input
                     required=""
                     name="name"
@@ -244,10 +243,7 @@
         </section>
       </div>
       <footer class="main-footer">
-        <strong
-          >&copy; 2023
-          <a href="">kaizen.edu.az</a></strong
-        >
+        <strong>&copy; 2023 <a href="">kaizen.edu.az</a></strong>
         <div class="float-right d-none d-sm-inline-block">
           <b>Versiya</b> 1.0.0
         </div>
@@ -257,41 +253,43 @@
     <script type="module" src="../../../assets/js/firebase.js"></script>
     <script src="../../../assets/js/uuid.js"></script>
 
-
-    
     <script type="module">
-      import {getDatabase, set, get, update, remove , ref} from "https://www.gstatic.com/firebasejs/10.6.0/firebase-database.js";
+      import {
+        getDatabase,
+        set,
+        get,
+        update,
+        remove,
+        ref,
+      } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-database.js";
 
       const db = getDatabase();
-
 
       let id = customId();
       let linkName = document.querySelector("#navbar-link-text");
       let linkPath = document.querySelector("#navbar-link-path");
 
       let addNavbarLink = document.querySelector("#add-navbar-link");
-  
 
       function InsertData() {
         event.preventDefault();
-          set(ref(db, "navbar/"+ id),{
-              Name: linkName.value,
-              ID: id,
-              Age: linkPath.value
+        set(ref(db, "navbar/" + id), {
+          Name: linkName.value,
+          ID: id,
+          Link: linkPath.value,
+        })
+          .then(() => {
+            alert("Data uğurla əlavə edildi!");
+            location.href = "../";
           })
-          .then(()=>{
-              alert("Data uğurla əlavə edildi!");
-              location.href = '../';
-
-          })
-          .catch((error)=>{
-              alert(error);
+          .catch((error) => {
+            alert(error);
           });
       }
 
+      addNavbarLink.addEventListener("click", InsertData);
+    </script>
 
-      addNavbarLink.addEventListener('click', InsertData);
-  </script>
     <!-- jQuery -->
     <script src="../../plugins/jquery/jquery.min.js"></script>
     <!-- jQuery UI 1.11.4 -->
@@ -340,9 +338,6 @@
     <script src="../../plugins/datatables-buttons/js/buttons.html5.min.js"></script>
     <script src="../../plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="../../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
-
-
-
 
     <script>
       $(function () {

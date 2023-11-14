@@ -220,7 +220,7 @@
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-            <form action="op/add_actor.php" method="post" role="form">
+            <form action="" method="post" role="form">
               <div class="card-body">
                 <div class="form-group">
                   <label for="exampleInputEmail1">Text</label>
@@ -229,70 +229,65 @@
                     name="name"
                     type="text"
                     class="form-control"
-                    id="exampleInputEmail1"
+                    id="about-link-name"
                     placeholder="Text Daxil Edin"
                   />
                 </div>
                 <div class="form-group">
                   <label for="exampleInputEmail1">Text</label>
                   <input
-                    required=""
                     name="name"
                     type="text"
                     class="form-control"
-                    id="exampleInputEmail1"
+                    id="about-link-text1"
                     placeholder="Text Daxil Edin (üstünlüklər)"
                   />
                 </div>
                 <div class="form-group">
                   <label for="exampleInputEmail1">Text</label>
                   <input
-                    required=""
                     name="name"
                     type="text"
                     class="form-control"
-                    id="exampleInputEmail1"
+                    id="about-link-text2"
                     placeholder="Text Daxil Edin (üstünlüklər)"
                   />
                 </div>
                 <div class="form-group">
                   <label for="exampleInputEmail1">Text</label>
                   <input
-                    required=""
                     name="name"
                     type="text"
                     class="form-control"
-                    id="exampleInputEmail1"
+                    id="about-link-text3"
                     placeholder="Text Daxil Edin (üstünlüklər)"
                   />
                 </div>
                 <div class="form-group">
                   <label for="exampleInputEmail1">Text</label>
                   <input
-                    required=""
                     name="name"
                     type="text"
                     class="form-control"
-                    id="exampleInputEmail1"
+                    id="about-link-text4"
                     placeholder="Text Daxil Edin (üstünlüklər)"
                   />
                 </div>
                 <div class="form-group">
                   <label for="exampleInputEmail1">Text</label>
                   <input
-                    required=""
                     name="name"
                     type="text"
                     class="form-control"
-                    id="exampleInputEmail1"
+                    id="about-link-text5"
                     placeholder="Text Daxil Edin (üstünlüklər)"
                   />
                 </div>
               </div>
 
               <div class="card-footer">
-                <button name="add_actor" type="submit" class="btn btn-primary">
-                  Əlavə Et
+                <button name="add_actor" id="edit-about-link" type="submit" class="btn btn-primary">
+                  Düzəliş Et
                 </button>
                 <a href="../" class="btn btn-danger"> Geri Qayıt</a>
               </div>
@@ -307,6 +302,72 @@
         </div>
       </footer>
     </div>
+
+    <script type="module" src="../../../assets/js/firebase.js"></script>
+    <script src="../../../assets/js/uuid.js"></script>
+
+    <script type="module">
+      import {
+        getDatabase,
+        set,
+        get,
+        update,
+        remove,
+        ref,
+      } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-database.js";
+
+      const db = getDatabase();
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const id = urlParams.get("id");
+      console.log(id);
+      let linkName = document.querySelector("#about-link-name");
+      let linkText1 = document.querySelector("#about-link-text1");
+      let linkText2 = document.querySelector("#about-link-text2");
+      let linkText3 = document.querySelector("#about-link-text3");
+      let linkText4 = document.querySelector("#about-link-text4");
+      let linkText5 = document.querySelector("#about-link-text5");
+      let editAboutLink = document.querySelector("#edit-about-link");
+
+      const aboutRef = ref(db, `about/${id}`);
+      get(aboutRef)
+        .then((snapshot) => {
+          if (snapshot.exists()) {
+            const aboutData = snapshot.val();
+            linkName.value = aboutData.Name || ""; 
+            linkText1.value = aboutData.Text1 || ""; 
+            linkText2.value = aboutData.Text2 || ""; 
+            linkText3.value = aboutData.Text3 || ""; 
+            linkText4.value = aboutData.Text4 || ""; 
+            linkText5.value = aboutData.Text5 || ""; 
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+
+      function UpdateData() {
+        event.preventDefault();
+        set(ref(db, "about/" + id), {
+          Name: linkName.value,
+          ID: id,
+          Text1: linkText1.value,
+          Text2: linkText2.value,
+          Text3: linkText3.value,
+          Text4: linkText4.value,
+          Text5: linkText5.value,
+        })
+          .then(() => {
+            alert("Data uğurla yeniləndi!");
+            location.href = "../";
+          })
+          .catch((error) => {
+            alert(error);
+          });
+      }
+
+      editAboutLink.addEventListener("click", UpdateData);
+    </script>
 
     <!-- jQuery -->
     <script src="../../plugins/jquery/jquery.min.js"></script>
@@ -356,7 +417,6 @@
     <script src="../../plugins/datatables-buttons/js/buttons.html5.min.js"></script>
     <script src="../../plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="../../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
-    <script type="module" src="../../../assets/js/firebase.js"></script>
     <script>
       $(function () {
         $("#example1")

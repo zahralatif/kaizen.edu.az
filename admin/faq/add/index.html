@@ -108,7 +108,7 @@
             <a class="nav-link" data-widget="pushmenu" href="#" role="button"
               ><i class="fas fa-bars"></i
             ></a>
-          </li>          
+          </li>
         </ul>
 
         <!-- Right navbar links -->
@@ -220,7 +220,7 @@
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-            <form action="op/add_actor.php" method="post" role="form">
+            <form>
               <div class="card-body">
                 <div class="form-group">
                   <label for="exampleInputEmail1">Sual</label>
@@ -229,7 +229,7 @@
                     name="name"
                     type="text"
                     class="form-control"
-                    id="exampleInputEmail1"
+                    id="faq-link-question"
                     placeholder="Sualı Daxil Edin"
                   />
                 </div>
@@ -240,14 +240,14 @@
                     name="name"
                     type="text"
                     class="form-control"
-                    id="exampleInputEmail1"
+                    id="faq-link-answer"
                     placeholder="Cavabı Daxil Edin"
                   />
                 </div>
               </div>
 
               <div class="card-footer">
-                <button name="add_actor" type="submit" class="btn btn-primary">
+                <button id="add-faq-link" class="btn btn-primary">
                   Əlavə Et
                 </button>
                 <a href="../" class="btn btn-danger"> Geri Qayıt</a>
@@ -257,15 +257,52 @@
         </section>
       </div>
       <footer class="main-footer">
-        <strong
-          >&copy; 2023
-          <a href="">kaizen.edu.az</a></strong
-        >
+        <strong>&copy; 2023 <a href="">kaizen.edu.az</a></strong>
         <div class="float-right d-none d-sm-inline-block">
           <b>Versiya</b> 1.0.0
         </div>
       </footer>
     </div>
+
+    <script type="module" src="../../../assets/js/firebase.js"></script>
+    <script src="../../../assets/js/uuid.js"></script>
+
+    <script type="module">
+      import {
+        getDatabase,
+        set,
+        get,
+        update,
+        remove,
+        ref,
+      } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-database.js";
+
+      const db = getDatabase();
+
+      let id = customId();
+      let linkName = document.querySelector("#faq-link-question");
+      let linkPath = document.querySelector("#faq-link-answer");
+
+      let addFaqLink = document.querySelector("#add-faq-link");
+
+      function InsertData() {
+        event.preventDefault();
+        set(ref(db, "faq/" + id), {
+          Name: linkName.value,
+          ID: id,
+          Link: linkPath.value,
+        })
+          .then(() => {
+            alert("Data uğurla əlavə edildi!");
+            location.href = "../";
+          })
+          .catch((error) => {
+            alert(error);
+          });
+      }
+
+      addFaqLink.addEventListener("click", InsertData);
+    </script>
 
     <!-- jQuery -->
     <script src="../../plugins/jquery/jquery.min.js"></script>
@@ -315,7 +352,6 @@
     <script src="../../plugins/datatables-buttons/js/buttons.html5.min.js"></script>
     <script src="../../plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="../../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
-    <script type="module" src="../../../assets/js/firebase.js"></script>
     <script>
       $(function () {
         $("#example1")
