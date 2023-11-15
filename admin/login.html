@@ -52,7 +52,7 @@
         <div class="card-body">
           <p class="login-box-msg">kaizen.edu.az</p>
 
-          <form action="/admin/index.html" method="post">
+          <form>
             <div class="input-group mb-3">
               <input
                 type="email"
@@ -83,7 +83,10 @@
             </div>
             <div class="row">
               <div class="col-12 mt-3">
-                <button type="submit" class="btn btn-warning btn-block">
+                <button
+                  type="submit"
+                  class="btn btn-warning btn-block login-btn"
+                >
                   Daxil Ol
                 </button>
               </div>
@@ -96,6 +99,48 @@
       <!-- /.card -->
     </div>
     <!-- /.login-box -->
+
+    <script type="module" src="../../assets/js/firebase.js"></script>
+    <script src="../../assets/js/converter.js"></script>
+
+    <script type="module">
+      import {
+        getDatabase,
+        set,
+        get,
+        update,
+        remove,
+        ref,
+      } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-database.js";
+
+      const db = getDatabase();
+
+      const userRef = ref(db, "user");
+      let userEmail = document.querySelector("#email");
+      let userPassword = document.querySelector("#password");
+      let userData;
+
+      get(userRef).then((snapshot) => {
+        if (snapshot.val() !== null) {
+          userData = snapshot.val();
+          console.log(userData);
+        }
+      });
+      let loginButton = document.querySelector(".login-btn");
+      loginButton.addEventListener("click", () => {
+        console.log(userData);
+        event.preventDefault();
+        if (userEmail.value == userData.email && userPassword.value == userData.password) {
+          localStorage.setItem("adminLogin", "true");
+          location.href = "./index.html";
+        }
+        else{
+          console.log("Error");
+        }
+        console.log(userEmail);
+        console.log(userPassword);
+      });
+    </script>
 
     <!-- jQuery -->
     <script src="/admin/plugins/jquery/jquery.min.js"></script>

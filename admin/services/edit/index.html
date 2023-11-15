@@ -279,6 +279,12 @@
       </footer>
     </div>
 
+    <script>
+      if (localStorage.getItem("adminLogin") != "true") {
+        location.href = "../../login.html";
+      }
+    </script>
+
     <script type="module" src="../../../assets/js/firebase.js"></script>
     <script src="../../../assets/js/uuid.js"></script>
 
@@ -297,9 +303,10 @@
       const urlParams = new URLSearchParams(window.location.search);
       const id = urlParams.get("id");
       console.log(id);
-      let linkName = document.querySelector("#services-link-name");
-      let linkFile = document.querySelector("#services-link-file");
+      let linkTitle = document.querySelector("#services-link-name");
+      let linkImage = document.querySelector("#services-link-file");
       let linkDescription = document.querySelector("#services-link-description")
+
       let editServicesLink = document.querySelector("#edit-services-link");
 
       const servicesRef = ref(db, `services/${id}`);
@@ -307,8 +314,8 @@
         .then((snapshot) => {
           if (snapshot.exists()) {
             const servicesData = snapshot.val();
-            linkName.value = servicesData.Name || "";
-            linkFile.value = servicesData.File || "";
+            linkTitle.value = servicesData.Title || "";
+            linkImage.value = servicesData.Image || "";
             linkDescription.value = servicesData.Description || "";
           }
         })
@@ -319,9 +326,9 @@
       function UpdateData() {
         event.preventDefault();
         set(ref(db, "services/" + id), {
-          Name: linkName.value,
+          Title: linkTitle.value,
           ID: id,
-          File: linkFile.value,
+          Image: linkImage.value,
           Description: linkDescription.value,
         })
           .then(() => {

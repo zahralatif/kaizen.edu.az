@@ -113,17 +113,17 @@
 
         <!-- Right navbar links -->
         <!-- <ul class="navbar-nav ml-auto">
-                  <li class="nav-item">
-                    <a
-                      class="nav-link"
-                      data-widget="navbar-search"
-                      href="#"
-                      role="button"
-                    >
-                      <i class="fas fa-search"></i>
-                    </a>
-                  </li>
-                </ul> -->
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    data-widget="navbar-search"
+                    href="#"
+                    role="button"
+                  >
+                    <i class="fas fa-search"></i>
+                  </a>
+                </li>
+              </ul> -->
       </nav>
       <!-- /.navbar -->
 
@@ -216,135 +216,61 @@
         <section class="content">
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title">Haqqımızda | Düzəliş Et</h3>
+              <h3 class="card-title">Əlaqə | Əlavə Et</h3>
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-            <form action="" method="post" role="form">
+            <form>
               <div class="card-body">
                 <div class="form-group">
-                  <label for="exampleInputEmail1">Əsas Məlumat</label>
+                  <label for="exampleInputEmail1">Əlaqə nömrəsi</label>
                   <input
                     required=""
                     name="name"
                     type="text"
                     class="form-control"
-                    id="about-link-name"
-                    placeholder="Text Daxil Edin"
+                    id="contact-link-phone"
+                    placeholder="Nömrəni Daxil Edin"
                   />
                 </div>
                 <div class="form-group">
-                  <label for="exampleInputEmail1">Text</label>
+                  <label for="exampleInputEmail1">Email</label>
                   <input
                     required=""
                     name="name"
-                    type="text"
+                    type="email"
                     class="form-control"
-                    id="about-link-why1"
-                    placeholder="Text Daxil Edin (niyə biz)"
+                    id="contact-link-email"
+                    placeholder="Emaili Daxil Edin"
                   />
                 </div>
                 <div class="form-group">
-                  <label for="exampleInputEmail1">Text</label>
-                  <input
-                    name="name"
-                    type="text"
-                    class="form-control"
-                    id="about-link-why2"
-                    placeholder="Text Daxil Edin (niyə biz)"
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Text</label>
-                  <input
-                    name="name"
-                    type="text"
-                    class="form-control"
-                    id="about-link-why3"
-                    placeholder="Text Daxil Edin (niyə biz)"
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Text</label>
-                  <input
-                    name="name"
-                    type="text"
-                    class="form-control"
-                    id="about-link-why4"
-                    placeholder="Text Daxil Edin (niyə biz)"
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Text</label>
-                  <input
-                    name="name"
-                    type="text"
-                    class="form-control"
-                    id="about-link-why5"
-                    placeholder="Text Daxil Edin (niyə biz)"
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Text</label>
+                  <label for="exampleInputEmail1">Address</label>
                   <input
                     required=""
                     name="name"
-                    type="text"
+                    type="email"
                     class="form-control"
-                    id="about-link-offer1"
-                    placeholder="Text Daxil Edin (təkliflərimiz)"
+                    id="contact-link-address"
+                    placeholder="Addressi Daxil Edin"
                   />
                 </div>
                 <div class="form-group">
-                  <label for="exampleInputEmail1">Text</label>
+                  <label for="exampleInputEmail1">Xəritə</label>
                   <input
+                    required=""
                     name="name"
-                    type="text"
+                    type="email"
                     class="form-control"
-                    id="about-link-offer2"
-                    placeholder="Text Daxil Edin (təkliflərimiz)"
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Text</label>
-                  <input
-                    name="name"
-                    type="text"
-                    class="form-control"
-                    id="about-link-offer3"
-                    placeholder="Text Daxil Edin (təkliflərimiz)"
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Text</label>
-                  <input
-                    name="name"
-                    type="text"
-                    class="form-control"
-                    id="about-link-offer4"
-                    placeholder="Text Daxil Edin (təkliflərimiz)"
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Text</label>
-                  <input
-                    name="name"
-                    type="text"
-                    class="form-control"
-                    id="about-link-offer5"
-                    placeholder="Text Daxil Edin (təkliflərimiz)"
+                    id="contact-link-map"
+                    placeholder="Xəritənin iframe linkini Daxil Edin"
                   />
                 </div>
               </div>
 
               <div class="card-footer">
-                <button
-                  name="add_actor"
-                  id="edit-about-link"
-                  type="submit"
-                  class="btn btn-primary"
-                >
-                  Düzəliş Et
+                <button id="add-contact-link" class="btn btn-primary">
+                  Əlavə Et
                 </button>
                 <a href="../" class="btn btn-danger"> Geri Qayıt</a>
               </div>
@@ -381,58 +307,25 @@
 
       const db = getDatabase();
 
-      const urlParams = new URLSearchParams(window.location.search);
-      const id = urlParams.get("id");
-      console.log(id);
-      let linkInfo = document.querySelector("#about-link-name");
-      let linkWhy1 = document.querySelector("#about-link-why1");
-      let linkWhy2 = document.querySelector("#about-link-why2");
-      let linkWhy3 = document.querySelector("#about-link-why3");
-      let linkWhy4 = document.querySelector("#about-link-why4");
-      let linkWhy5 = document.querySelector("#about-link-why5");
-      let linkOffer1 = document.querySelector("#about-link-offer1");
-      let linkOffer2 = document.querySelector("#about-link-offer2");
-      let linkOffer3 = document.querySelector("#about-link-offer3");
-      let linkOffer4 = document.querySelector("#about-link-offer4");
-      let linkOffer5 = document.querySelector("#about-link-offer5");
+      let id = customId();
+      let linkPhone = document.querySelector("#contact-link-phone");
+      let linkEmail = document.querySelector("#contact-link-email");
+      let linkAddress = document.querySelector("#contact-link-address");
+      let linkMap = document.querySelector("#contact-link-map");
 
-      let editAboutLink = document.querySelector("#edit-about-link");
+      let addContactLink = document.querySelector("#add-contact-link");
 
-      const aboutRef = ref(db, `about/${id}`);
-      get(aboutRef)
-        .then((snapshot) => {
-          if (snapshot.exists()) {
-            const aboutData = snapshot.val();
-            linkInfo.value = aboutData.Info || "";
-            linkWhy1.value = aboutData.Why1 || "";
-            linkWhy2.value = aboutData.Why2 || "";
-            linkWhy3.value = aboutData.Why3 || "";
-            linkWhy4.value = aboutData.Why4 || "";
-            linkWhy5.value = aboutData.Why5 || "";
-            linkOffer1.value = aboutData.Offer1 || "";
-            linkOffer2.value = aboutData.Offer2 || "";
-            linkOffer3.value = aboutData.Offer3 || "";
-            linkOffer4.value = aboutData.Offer4 || "";
-            linkOffer5.value = aboutData.Offer5 || "";
-          }
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-
-      function UpdateData() {
+      function InsertData() {
         event.preventDefault();
-        set(ref(db, "about/" + id), {
-          Name: linkName.value,
+        set(ref(db, "contact/" + id), {
+          Phone: linkPhone.value,
           ID: id,
-          Text1: linkText1.value,
-          Text2: linkText2.value,
-          Text3: linkText3.value,
-          Text4: linkText4.value,
-          Text5: linkText5.value,
+          Email: linkEmail.value,
+          Address: linkAddress.value,
+          Map: linkMap.value,
         })
           .then(() => {
-            alert("Data uğurla yeniləndi!");
+            alert("Data uğurla əlavə edildi!");
             location.href = "../";
           })
           .catch((error) => {
@@ -440,7 +333,7 @@
           });
       }
 
-      editAboutLink.addEventListener("click", UpdateData);
+      addContactLink.addEventListener("click", InsertData);
     </script>
 
     <!-- jQuery -->

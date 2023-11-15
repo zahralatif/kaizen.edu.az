@@ -240,6 +240,9 @@
                         <div class="card">
                           <div class="card-header d-flex align-items-center">
                             <h3 class="card-title">Haqqımızda</h3>
+                            <a href="./add/" class="btn btn-success ml-auto"
+                              >Haqqımızda hissəsi əlavə et</a
+                            >
                           </div>
                           <div class="card-body">
                             <table
@@ -279,10 +282,14 @@
       </footer>
     </div>
 
+    <script>
+      if (localStorage.getItem("adminLogin") != "true") {
+        location.href = "../login.html";
+      }
+    </script>
+
     <script type="module" src="../../assets/js/firebase.js"></script>
     <script src="../../assets/js/converter.js"></script>
-    <script src="../../../assets/js/uuid.js"></script>
-
 
     <script type="module">
       import {
@@ -296,7 +303,6 @@
 
       const db = getDatabase();
       let formattedData = [];
-      let id = customId();
 
       const aboutRef = ref(db, "about");
       let aboutTable = document.querySelector("#about_table");
@@ -320,7 +326,7 @@
               .map(
                 (item) => `
         <tr>
-          <td>${item.Name}</td>
+          <td>About section</td>
           <td style="width: 23%" class="project-actions text-center">
             <a class="btn btn-info btn-sm" id="update" href="./edit/?id=${item.ID}">
               <i class="fas fa-pencil-alt"> </i>
@@ -336,7 +342,7 @@
               )
               .join("");
             console.log(rowsHTML);
-            aboutData.innerHTML = rowsHTML;
+            aboutTable.innerHTML = rowsHTML;
 
             document.querySelectorAll("#remove").forEach((btn) => {
               btn.addEventListener("click", (event) => {

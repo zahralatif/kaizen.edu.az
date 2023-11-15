@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/boxicons@latest/css/boxicons.min.css"
+    />
+    <link rel="stylesheet" href="../assets/styles/reset.css" />
+    <link rel="stylesheet" href="../assets/styles/style.css" />
+
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="../assets/fonts/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="../assets/fonts/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="../assets/fonts/favicon-16x16.png"
+    />
+    <link rel="manifest" href="../assets/fonts/site.webmanifest" />
+
+    <title>Kaizen Təhsil Mərkəzi</title>
+
+    <meta name="Description" content="Kaizen Təhsil Mərkəzi" />
+    <meta name="keywords" content="kaizen" />
+  </head>
+  <body>
+    <!-- Navbar Start -->
+    <nav class="nav">
+      <a href="../index.html" class="nav__logo">
+        <div class="nav__logo--img">
+          <img src="../assets/images/Kaizen TM-logo.png" alt="" />
+        </div>
+      </a>
+      <section class="nav__menu" id="nav-menu">
+        <ul class="nav__list"></ul>
+        <div class="nav__buttons">
+          <a href="../contact/" class="contact__button button">Əlaqə</a>
+        </div>
+      </section>
+
+      <div class="nav__buttons">
+        <div class="nav__toggle" id="nav-toggle">
+          <i class="bx bx-menu"></i>
+        </div>
+      </div>
+    </nav>
+
+    <header class="services__page__header section">
+      <div class="services__page__container">
+        <h1 class="services__page__title">Xidmətlərimiz</h1>
+      </div>
+    </header>
+
+    <main>
+      <!-- Services -->
+      <section class="services__page section" id="services">
+        <div class="services__cards">
+          <ul class="services__list"></ul>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer section">
+      <div class="footer__container">
+        <div class="footer__data">
+          <div class="footer__logo--img">
+            <a href="../index.html"
+              ><img src="../assets/images/Kaizen TM-logo.png" alt=""
+            /></a>
+          </div>
+
+          <ul class="footer__social__links">
+            <li class="footer__links">
+              <a
+                href="https://www.instagram.com/kaizen.edu.az"
+                target="_blank"
+                class="footer__link__item"
+              >
+                <i class="bx bxl-instagram"></i>
+              </a>
+            </li>
+
+            <li class="footer__links">
+              <a
+                href="https://www.facebook.com/kaizen.edu.az"
+                class="footer__link__item"
+              >
+                <i class="bx bxl-facebook-circle"></i>
+              </a>
+            </li>
+
+            <li class="footer__links">
+              <a
+                href="https://wa.me/+994554758232"
+                target="_blank"
+                class="footer__link__item"
+              >
+                <i class="bx bxl-whatsapp"></i>
+              </a>
+            </li>
+
+            <li class="footer__links">
+              <a
+                href="tel:+994554758232"
+                target="_blank"
+                class="footer__link__item"
+              >
+                <i class="bx bx-phone"></i>
+              </a>
+            </li>
+
+            <li class="footer__links">
+              <a
+                href="mailto:info@kaizen.edu.az"
+                target="_blank"
+                class="footer__link__item"
+              >
+                <i class="bx bx-envelope"></i>
+              </a>
+            </li>
+
+            <!-- <li class="footer__links">
+              <a
+                href="https://www.linkedin.com/company/"
+                class="footer__link__item"
+              >
+                <i class="bx bxl-linkedin"></i>
+              </a>
+            </li> -->
+
+            <!-- <li class="footer__links">
+              <a href="https://www.youtube.com" class="footer__link__item">
+                <i class="bx bxl-youtube"></i>
+              </a>
+            </li> -->
+          </ul>
+        </div>
+
+        <p class="footer__copyright">&copy; Kaizen Təhsil Mərkəzi</p>
+      </div>
+    </footer>
+
+    <div class="scrollup" id="scroll-up">
+      <!-- <a href="https://www.linkedin.com/in/zahra-latif/" class="author">
+        <b>Səhifəni hazırladı:</b> Zəhra Lətif
+      </a> -->
+
+      <a href="#" class="scroll">
+        <i class="bx bxs-up-arrow crollup__icon"></i>
+      </a>
+    </div>
+
+    <script type="module" src="../assets/js/firebase.js"></script>
+    <script src="../assets/js/converter.js"></script>
+
+    <script type="module">
+      import {
+        getDatabase,
+        set,
+        get,
+        update,
+        remove,
+        ref,
+      } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-database.js";
+
+      const db = getDatabase();
+      let formattedData = [];
+
+      const navRef = ref(db, "navbar");
+      let navList = document.querySelector(".nav__list");
+
+      function formatNavData(navData) {
+        return Object.keys(navData).map((key) => {
+          return { ID: key, ...navData[key] };
+        });
+      }
+      get(navRef)
+        .then((snapshot) => {
+          if (snapshot.val() !== null) {
+            const navData = snapshot.val();
+            console.log(navData);
+            formattedData = formatNavData(navData);
+            console.log(formattedData);
+
+            const rowsHTML = formattedData
+              .map(
+                (item) => `
+                <li class="nav__item">
+                  <a href="${item.Link}" class="nav__link nav__link--home">${item.Name}</a>
+                </li>
+                `
+              )
+              .join("");
+            console.log(rowsHTML);
+            navList.innerHTML = rowsHTML;
+          } else {
+            console.log("no data");
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+
+        const servicesRef = ref(db, "services");
+      let servicesCards = document.querySelector(".services__list");
+
+      function formatData(servicesData) {
+        return Object.keys(servicesData).map((key) => {
+          return { ID: key, ...servicesData[key] };
+        });
+      }
+      get(servicesRef)
+        .then((snapshot) => {
+          if (snapshot.val() !== null) {
+            const servicesData = snapshot.val();
+            console.log(servicesData);
+            formattedData = formatData(servicesData);
+            console.log(formattedData);
+
+            const rowsHTML = formattedData
+              .map(
+                (item) => `
+                <li class="services__item services__page--item">
+                  <div class="services__link">
+                    <div class="services__item--img">
+                      <img src="${item.Image}" alt="" />
+                    </div>
+                    <div class="services__item__info">
+                      <h3 class="services__item__title">${item.Title}</h3>
+                      <p class="services__description">${item.Description}</p>
+                    </div>
+                  </div>
+                </li>`
+              )
+              .join("");
+            console.log(rowsHTML);
+            servicesCards.innerHTML = rowsHTML;
+          } else {
+            console.log("no data");
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    </script>
+
+    <script src="../assets/js/main.js"></script>
+  </body>
+</html>

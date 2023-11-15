@@ -22,12 +22,13 @@ function accordion() {
             this.setAttribute('aria-expanded', 'true');
         }
     }
-    console.log(items);
 
     items.forEach((item) => item.addEventListener('click', toggleAccordion));
 }
 accordion();
-setTimeout(accordion(),2000);
+setTimeout(() => {
+    accordion()
+}, 1000);
 
 const scrollUp = () => {
     const scrollUp = document.getElementById('scroll-up')

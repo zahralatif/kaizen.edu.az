@@ -264,6 +264,12 @@
       </footer>
     </div>
 
+    <script>
+      if (localStorage.getItem("adminLogin") != "true") {
+        location.href = "../../login.html";
+      }
+    </script>
+
     <script type="module" src="../../../assets/js/firebase.js"></script>
     <script src="../../../assets/js/uuid.js"></script>
 

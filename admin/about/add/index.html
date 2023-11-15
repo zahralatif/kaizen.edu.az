@@ -216,11 +216,11 @@
         <section class="content">
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title">Haqqımızda | Düzəliş Et</h3>
+              <h3 class="card-title">Haqqımızda | Əlavə Et</h3>
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-            <form action="" method="post" role="form">
+            <form>
               <div class="card-body">
                 <div class="form-group">
                   <label for="exampleInputEmail1">Əsas Məlumat</label>
@@ -340,11 +340,11 @@
               <div class="card-footer">
                 <button
                   name="add_actor"
-                  id="edit-about-link"
+                  id="add-about-link"
                   type="submit"
                   class="btn btn-primary"
                 >
-                  Düzəliş Et
+                  Əlavə Et
                 </button>
                 <a href="../" class="btn btn-danger"> Geri Qayıt</a>
               </div>
@@ -381,9 +381,7 @@
 
       const db = getDatabase();
 
-      const urlParams = new URLSearchParams(window.location.search);
-      const id = urlParams.get("id");
-      console.log(id);
+      let id = customId();
       let linkInfo = document.querySelector("#about-link-name");
       let linkWhy1 = document.querySelector("#about-link-why1");
       let linkWhy2 = document.querySelector("#about-link-why2");
@@ -396,43 +394,26 @@
       let linkOffer4 = document.querySelector("#about-link-offer4");
       let linkOffer5 = document.querySelector("#about-link-offer5");
 
-      let editAboutLink = document.querySelector("#edit-about-link");
+      let addAboutLink = document.querySelector("#add-about-link");
 
-      const aboutRef = ref(db, `about/${id}`);
-      get(aboutRef)
-        .then((snapshot) => {
-          if (snapshot.exists()) {
-            const aboutData = snapshot.val();
-            linkInfo.value = aboutData.Info || "";
-            linkWhy1.value = aboutData.Why1 || "";
-            linkWhy2.value = aboutData.Why2 || "";
-            linkWhy3.value = aboutData.Why3 || "";
-            linkWhy4.value = aboutData.Why4 || "";
-            linkWhy5.value = aboutData.Why5 || "";
-            linkOffer1.value = aboutData.Offer1 || "";
-            linkOffer2.value = aboutData.Offer2 || "";
-            linkOffer3.value = aboutData.Offer3 || "";
-            linkOffer4.value = aboutData.Offer4 || "";
-            linkOffer5.value = aboutData.Offer5 || "";
-          }
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-
-      function UpdateData() {
+      function InsertData() {
         event.preventDefault();
         set(ref(db, "about/" + id), {
-          Name: linkName.value,
+          Info: linkInfo.value,
           ID: id,
-          Text1: linkText1.value,
-          Text2: linkText2.value,
-          Text3: linkText3.value,
-          Text4: linkText4.value,
-          Text5: linkText5.value,
+          Why1: linkWhy1.value,
+          Why2: linkWhy2.value,
+          Why3: linkWhy3.value,
+          Why4: linkWhy4.value,
+          Why5: linkWhy5.value,
+          Offer1: linkOffer1.value,
+          Offer2: linkOffer2.value,
+          Offer3: linkOffer3.value,
+          Offer4: linkOffer4.value,
+          Offer5: linkOffer5.value,
         })
           .then(() => {
-            alert("Data uğurla yeniləndi!");
+            alert("Data uğurla əlavə edildi!");
             location.href = "../";
           })
           .catch((error) => {
@@ -440,7 +421,7 @@
           });
       }
 
-      editAboutLink.addEventListener("click", UpdateData);
+      addAboutLink.addEventListener("click", InsertData);
     </script>
 
     <!-- jQuery -->

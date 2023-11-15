@@ -282,6 +282,12 @@
       </footer>
     </div>
 
+    <script>
+      if (localStorage.getItem("adminLogin") != "true") {
+        location.href = "../login.html";
+      }
+    </script>
+
     <script type="module" src="../../assets/js/firebase.js"></script>
     <script src="../../assets/js/converter.js"></script>
 
@@ -320,7 +326,7 @@
               .map(
                 (item) => `
         <tr>
-          <td>${item.Name}</td>
+          <td>${item.Title}</td>
           <td style="width: 23%" class="project-actions text-center">
             <a class="btn btn-info btn-sm" id="update" href="./edit/?id=${item.ID}">
               <i class="fas fa-pencil-alt"> </i>

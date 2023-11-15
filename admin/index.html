@@ -133,10 +133,7 @@
       <!-- Main Sidebar Container -->
       <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <a href="index.html" class="brand-link">
-          <img
-            src="../assets/fonts/apple-touch-icon.png"
-            class="brand-image"            
-          />
+          <img src="../assets/fonts/apple-touch-icon.png" class="brand-image" />
           <span class="brand-text font-weight-light">Admin Panel</span>
         </a>
 
@@ -193,28 +190,21 @@
               <li class="nav-item">
                 <a href="about/" class="nav-link">
                   <i class="nav-icon fas fa-book"></i>
-                  <p>
-                    Haqqımızda
-                  </p>
+                  <p>Haqqımızda</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="services/" class="nav-link">
                   <i class="nav-icon fas fa-chart-pie"></i>
-                  <p>
-                    Xidmətlərimiz
-                  </p>
+                  <p>Xidmətlərimiz</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="contact/" class="nav-link">
                   <i class="nav-icon fas fa-th"></i>
-                  <p>
-                    Əlaqə                    
-                  </p>
+                  <p>Əlaqə</p>
                 </a>
               </li>
-
             </ul>
           </nav>
         </div>
@@ -316,7 +306,7 @@
                 </section>
 
                 <!-- Main content -->
-                <!-- <section class="content">
+            <!-- <section class="content">
                   <div class="container-fluid">
                     <div class="row">
                       <div class="col-12">
@@ -420,16 +410,17 @@
         </section>
       </div>
       <footer class="main-footer">
-        <strong
-          >&copy; 2023
-          <a href="">kaizen.edu.az</a></strong
-        >
+        <strong>&copy; 2023 <a href="">kaizen.edu.az</a></strong>
         <div class="float-right d-none d-sm-inline-block">
           <b>Versiya</b> 1.0.0
         </div>
       </footer>
-
     </div>
+    <script>
+      if (localStorage.getItem("adminLogin") != "true") {
+        location.href = "./login.html";
+      }
+    </script>
 
     <!-- jQuery -->
     <script src="plugins/jquery/jquery.min.js"></script>

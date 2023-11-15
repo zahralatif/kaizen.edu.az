@@ -40,30 +40,15 @@
   <body>
     <!-- Navbar Start -->
     <nav class="nav">
-      <a href="index.html" class="nav__logo">
+      <a href="./index.html" class="nav__logo">
         <div class="nav__logo--img">
           <img src="./assets/images/Kaizen TM-logo.png" alt="" />
         </div>
       </a>
       <section class="nav__menu" id="nav-menu">
-        <ul class="nav__list">
-          <li class="nav__item">
-            <a href="index.html" class="nav__link nav__link--home"
-              >Ana Səhifə</a
-            >
-          </li>
-          <li class="nav__item">
-            <a href="about.html" class="nav__link">Haqqımızda</a>
-          </li>
-          <li class="nav__item">
-            <a href="services.html" class="nav__link">Xidmətlərimiz</a>
-          </li>
-          <li class="nav__item nav__item--contact">
-            <a href="contact.html" class="nav__link">Bizimlə əlaqə</a>
-          </li>
-        </ul>
+        <ul class="nav__list"></ul>
         <div class="nav__buttons">
-          <a href="contact.html" class="contact__button button">Əlaqə</a>
+          <a href="./contact/" class="contact__button button">Əlaqə</a>
         </div>
       </section>
 
@@ -72,9 +57,6 @@
           <i class="bx bx-menu"></i>
         </div>
       </div>
-      <!-- <div class="lang__changer" id="lang-changer">
-        <i class="bx bx-world"></i>
-      </div> -->
     </nav>
 
     <!-- Header Start -->
@@ -88,7 +70,7 @@
             nəzəri, həm praktiki baxımdan imkan verir ki, gələcəyə bugündən
             hazır olaq.
           </p>
-          <a href="services.html" class="button gradient__button"
+          <a href="./services/" class="button gradient__button"
             >Xidmətlərimiz</a
           >
         </div>
@@ -127,7 +109,7 @@
               </p>
             </li>
 
-            <a href="about.html" class="button gradient__button">Haqqımızda</a>
+            <a href="./about/" class="button gradient__button">Haqqımızda</a>
           </ul>
         </div>
         <div class="about__img">
@@ -142,7 +124,7 @@
 
           <ul class="services__list">
             <li class="services__item">
-              <a href="services.html" class="services__link">
+              <a href="./services/" class="services__link">
                 <div class="services__item--img">
                   <img src="./assets/images/JVD-4987.jpg" alt="" />
                 </div>
@@ -158,7 +140,7 @@
             </li>
 
             <li class="services__item">
-              <a href="services.html" class="services__link">
+              <a href="./services/" class="services__link">
                 <div class="services__item--img">
                   <img
                     src="./assets/images/Pattern Drawing Machine.png"
@@ -177,7 +159,7 @@
             </li>
 
             <li class="services__item">
-              <a href="services.html" class="services__link">
+              <a href="./services/" class="services__link">
                 <div class="services__item--img">
                   <img src="./assets/images/JVD-2974.jpg" alt="" />
                 </div>
@@ -193,7 +175,7 @@
             </li>
 
             <li class="services__item">
-              <a href="services.html" class="services__link">
+              <a href="./services/" class="services__link">
                 <div class="services__item--img">
                   <img src="./assets/images/FP6B7945.JPG" alt="" />
                 </div>
@@ -210,7 +192,7 @@
           </ul>
         </div>
         <div class="services__button">
-          <a href="services.html" class="button gradient__button"
+          <a href="./services/" class="button gradient__button"
             >Xidmətlərimiz</a
           >
         </div>
@@ -230,7 +212,7 @@
       <div class="footer__container">
         <div class="footer__data">
           <div class="footer__logo--img">
-            <a href="index.html"
+            <a href="./index.html"
               ><img src="./assets/images/Kaizen TM-logo.png" alt=""
             /></a>
           </div>
@@ -316,10 +298,8 @@
       </a>
     </div>
 
-    <!-- <script type="module" src="./assets/js/firebase.js"></script> -->
-
-    <script type="module" src="../../assets/js/firebase.js"></script>
-    <script src="../../assets/js/converter.js"></script>
+    <script type="module" src="./assets/js/firebase.js"></script>
+    <script src="./assets/js/converter.js"></script>
 
     <script type="module">
       import {
@@ -333,6 +313,41 @@
 
       const db = getDatabase();
       let formattedData = [];
+
+      const navRef = ref(db, "navbar");
+      let navList = document.querySelector(".nav__list");
+
+      function formatNavData(navData) {
+        return Object.keys(navData).map((key) => {
+          return { ID: key, ...navData[key] };
+        });
+      }
+      get(navRef)
+        .then((snapshot) => {
+          if (snapshot.val() !== null) {
+            const navData = snapshot.val();
+            console.log(navData);
+            formattedData = formatNavData(navData);
+            console.log(formattedData);
+
+            const rowsHTML = formattedData
+              .map(
+                (item) => `
+                <li class="nav__item">
+                  <a href="${item.Link}" class="nav__link nav__link--home">${item.Name}</a>
+                </li>
+                `
+              )
+              .join("");
+            console.log(rowsHTML);
+            navList.innerHTML = rowsHTML;
+          } else {
+            console.log("no data");
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
 
       const faqRef = ref(db, "faq");
       let faqCard = document.querySelector(".faq__cards");
@@ -354,15 +369,15 @@
               .map(
                 (item) => `
                 <div class="accordion-item faq__item">
-              <button id="accordion-button-${item.ID}" aria-expanded="false">
-                <span class="accordion-title">${item.Question}</span>
-                <span class="icon" aria-hidden="true"></span>
-              </button>
-              <div class="accordion-content">
-                <p>${item.Answer}</p>
-              </div>
-            </div>
-      `
+                  <button id="accordion-button-${item.ID}" aria-expanded="false">
+                    <span class="accordion-title">${item.Question}</span>
+                    <span class="icon" aria-hidden="true"></span>
+                  </button>
+                  <div class="accordion-content">
+                    <p>${item.Answer}</p>
+                  </div>
+                </div>
+                `
               )
               .join("");
             console.log(rowsHTML);
