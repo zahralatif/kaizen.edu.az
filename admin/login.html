@@ -42,6 +42,7 @@
     />
     <link rel="manifest" href="../assets/fonts/site.webmanifest" />
   </head>
+  
   <body class="hold-transition login-page">
     <div class="login-box">
       <!-- /.login-logo -->
@@ -129,16 +130,16 @@
       let loginButton = document.querySelector(".login-btn");
       loginButton.addEventListener("click", () => {
         console.log(userData);
+
         event.preventDefault();
+
         if (userEmail.value == userData.email && userPassword.value == userData.password) {
           localStorage.setItem("adminLogin", "true");
           location.href = "./index.html";
         }
         else{
-          console.log("Error");
+          alert("Email or Password is incorrect!");
         }
-        console.log(userEmail);
-        console.log(userPassword);
       });
     </script>
 

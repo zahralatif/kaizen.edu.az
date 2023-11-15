@@ -49,13 +49,14 @@
         </div>
       </section>
 
-      <div class="nav__buttons">
+      <div class="nav__buttons menu-btn">
         <div class="nav__toggle" id="nav-toggle">
           <i class="bx bx-menu"></i>
         </div>
       </div>
     </nav>
 
+    <!-- Header Start -->
     <header class="services__page__header section">
       <div class="services__page__container">
         <h1 class="services__page__title">Xidmətlərimiz</h1>
@@ -213,7 +214,7 @@
           console.error(error);
         });
 
-        const servicesRef = ref(db, "services");
+      const servicesRef = ref(db, "services");
       let servicesCards = document.querySelector(".services__list");
 
       function formatData(servicesData) {

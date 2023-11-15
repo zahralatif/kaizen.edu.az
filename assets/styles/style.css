@@ -900,6 +900,8 @@ button {
         margin-top: 1.5rem;
     }
 
+    .menu-btn{margin: 0;}
+
     .nav__item--contact {
         display: block;
     }

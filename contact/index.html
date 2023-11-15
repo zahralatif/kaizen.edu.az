@@ -49,13 +49,14 @@
         </div>
       </section>
 
-      <div class="nav__buttons">
+      <div class="nav__buttons menu-btn">
         <div class="nav__toggle" id="nav-toggle">
           <i class="bx bx-menu"></i>
         </div>
       </div>
     </nav>
 
+    <!-- Header Start -->
     <header class="contact__page__header section">
       <div class="contact__page__container">
         <h1 class="contact__page__title">Bizimlə əlaqə</h1>
@@ -217,6 +218,7 @@
           return { ID: key, ...contactData[key] };
         });
       }
+
       get(contactRef)
         .then((snapshot) => {
           if (snapshot.val() !== null) {
