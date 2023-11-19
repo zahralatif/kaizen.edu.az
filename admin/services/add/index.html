@@ -229,6 +229,7 @@
                         type="file"
                         class="custom-file-input"
                         id="services-link-file"
+                        onchange="getImageData()"
                       />
                       <label class="custom-file-label" for="exampleInputFile"
                         >Xidmət şəkili</label
@@ -309,21 +310,52 @@
 
       let addServicesLink = document.querySelector("#add-services-link");
 
-      function InsertData() {
+      function getImageData(event) {
+        const fileInput = event.target;
+        const file = fileInput.files[0];
+
+        if (!file) {
+          uploadFile(file)
+            .then((snapshot) => {
+              console.log("File uploaded successfully!", snapshot);
+              return snapshot.ref.getDownloadURL();
+            })
+            .then((downloadURL) => {
+              console.log("File download url: ", downloadURL);
+            })
+            .catch((error) => {
+              console.error("Error uploading file:", error);
+            });
+        }
+      }
+
+      function InsertData(event) {
         event.preventDefault();
-        set(ref(db, "services/" + id), {
-          Title: linkTitle.value,
-          ID: id,
-          Image: linkImage.value,
-          Description: linkDescription.value,
-        })
-          .then(() => {
-            alert("Data uğurla əlavə edildi!");
-            location.href = "../";
-          })
-          .catch((error) => {
-            alert(error);
-          });
+
+        const fileInput = document.querySelector("#services-link-file");
+        const file = fileInput.files[0];
+
+        if (!file) {
+          uploadFile(file)
+            .then((snapshot) => snapshot.ref.getDownloadURL())
+            .then((downloadURL) => {
+              return set(ref(db, "services/" + id), {
+                Title: linkTitle.value,
+                ID: id,
+                Image: downloadURL,
+                Description: linkDescription.value,
+              });
+            })
+            .then(() => {
+              alert("Data uğurla əlavə edildi!");
+              location.href = "../";
+            })
+            .catch((error) => {
+              alert(error);
+            });
+        } else {
+          console.log(error);
+        }
       }
 
       addServicesLink.addEventListener("click", InsertData);
