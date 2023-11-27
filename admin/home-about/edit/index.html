@@ -109,7 +109,7 @@
             ></a>
           </li>
           <li class="nav-item d-none d-sm-inline-block">
-            <a href="" class="nav-link log-out">Çıxış et</a>
+            <a href="./login.html" class="nav-link log-out">Çıxış et</a>
           </li>
         </ul>
       </nav>
@@ -210,61 +210,44 @@
         <section class="content">
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title">Əlaqə | Əlavə Et</h3>
+              <h3 class="card-title">Haqqımızda (ana səhifə) | Düzəliş Et</h3>
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-            <form>
+            <form action="" method="post" role="form">
               <div class="card-body">
                 <div class="form-group">
-                  <label for="exampleInputEmail1">Əlaqə nömrəsi</label>
+                  <label for="exampleInputEmail1">Text 1</label>
                   <input
                     required=""
                     name="name"
                     type="text"
                     class="form-control"
-                    id="contact-link-phone"
-                    placeholder="Nömrəni Daxil Edin"
+                    id="about-link-text1"
+                    placeholder="Yazını Daxil Edin"
                   />
                 </div>
                 <div class="form-group">
-                  <label for="exampleInputEmail1">Email</label>
+                  <label for="exampleInputEmail1">Text 2</label>
                   <input
                     required=""
                     name="name"
-                    type="email"
+                    type="text"
                     class="form-control"
-                    id="contact-link-email"
-                    placeholder="Emaili Daxil Edin"
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Address</label>
-                  <input
-                    required=""
-                    name="name"
-                    type="email"
-                    class="form-control"
-                    id="contact-link-address"
-                    placeholder="Addressi Daxil Edin"
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Xəritə</label>
-                  <input
-                    required=""
-                    name="name"
-                    type="email"
-                    class="form-control"
-                    id="contact-link-map"
-                    placeholder="Xəritənin iframe linkini Daxil Edin"
+                    id="about-link-text2"
+                    placeholder="Yazını Daxil Edin"
                   />
                 </div>
               </div>
 
               <div class="card-footer">
-                <button id="add-contact-link" class="btn btn-primary">
-                  Əlavə Et
+                <button
+                  name="add_actor"
+                  id="edit-about-link"
+                  type="submit"
+                  class="btn btn-primary"
+                >
+                  Düzəliş Et
                 </button>
                 <a href="../" class="btn btn-danger"> Geri Qayıt</a>
               </div>
@@ -308,25 +291,35 @@
 
       const db = getDatabase();
 
-      let id = customId();
-      let linkPhone = document.querySelector("#contact-link-phone");
-      let linkEmail = document.querySelector("#contact-link-email");
-      let linkAddress = document.querySelector("#contact-link-address");
-      let linkMap = document.querySelector("#contact-link-map");
+      const urlParams = new URLSearchParams(window.location.search);
+      const id = urlParams.get("id");
+      console.log(id);
+      let linkText1 = document.querySelector("#about-link-text1");
+      let linkText2 = document.querySelector("#about-link-text2");
+      let editAbouthomeLink = document.querySelector("#edit-about-link");
 
-      let addContactLink = document.querySelector("#add-contact-link");
+      const abouthomeRef = ref(db, `home-about/${id}`);
+      get(abouthomeRef)
+        .then((snapshot) => {
+          if (snapshot.exists()) {
+            const abouthomeData = snapshot.val();
+            linkText1.value = abouthomeData.Text1 || ""; 
+            linkText2.value = abouthomeData.Text2 || ""; 
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
 
-      function InsertData() {
+      function UpdateData() {
         event.preventDefault();
-        set(ref(db, "contact/" + id), {
-          Phone: linkPhone.value,
+        set(ref(db, "home-about/" + id), {
+          Text1: linkText1.value,
+          Text2: linkText2.value,
           ID: id,
-          Email: linkEmail.value,
-          Address: linkAddress.value,
-          Map: linkMap.value,
         })
           .then(() => {
-            alert("Data uğurla əlavə edildi!");
+            alert("Data uğurla yeniləndi!");
             location.href = "../";
           })
           .catch((error) => {
@@ -334,7 +327,7 @@
           });
       }
 
-      addContactLink.addEventListener("click", InsertData);
+      editAbouthomeLink.addEventListener("click", UpdateData);
     </script>
 
     <!-- jQuery -->

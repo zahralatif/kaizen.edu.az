@@ -159,7 +159,7 @@
                 </a>
                 <ul class="nav nav-treeview">
                   <li class="nav-item">
-                    <a href="../navbar/" class="nav-link">
+                    <a href="./" class="nav-link">
                       <i class="far fa-circle nav-icon"></i>
                       <p>Navbar</p>
                     </a>
@@ -212,14 +212,14 @@
                   <div class="container-fluid">
                     <div class="row mb-2">
                       <div class="col-sm-6">
-                        <h1>Əlaqə</h1>
+                        <h1>Haqqımızda (ana səhifə)</h1>
                       </div>
                       <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                           <li class="breadcrumb-item">
                             <a href="../">Admin Panel</a>
                           </li>
-                          <li class="breadcrumb-item active">Əlaqə</li>
+                          <li class="breadcrumb-item active">Haqqımızda</li>
                         </ol>
                       </div>
                     </div>
@@ -233,9 +233,9 @@
                       <div class="col-12">
                         <div class="card">
                           <div class="card-header d-flex align-items-center">
-                            <h3 class="card-title">Əlaqə</h3>
+                            <h3 class="card-title">Haqqımızda (ana səhifə)</h3>
                             <a href="./add/" class="btn btn-success ml-auto"
-                              >Əlaqə hissəsi əlavə et</a
+                              >Haqqımızda əlavə et</a
                             >
                           </div>
                           <div class="card-body">
@@ -249,7 +249,7 @@
                                   <th>Əməliyatlar</th>
                                 </tr>
                               </thead>
-                              <tbody id="contact_table"></tbody>
+                              <tbody id="abouthome_table"></tbody>
                               <tfoot>
                                 <tr>
                                   <th>Adı</th>
@@ -305,45 +305,45 @@
       const db = getDatabase();
       let formattedData = [];
 
-      const contactRef = ref(db, "contact");
-      let contactTable = document.querySelector("#contact_table");
+      const abouthomeRef = ref(db, "home-about");
+      let abouthomeTable = document.querySelector("#abouthome_table");
       var removeBtn = document.querySelector("#remove");
       var updateBtn = document.querySelector("#update");
 
-      function formatData(contactData) {
-        return Object.keys(contactData).map((key) => {
-          return { ID: key, ...contactData[key] };
+      function formatData(abouthomeData) {
+        return Object.keys(abouthomeData).map((key) => {
+          return { ID: key, ...abouthomeData[key] };
         });
       }
-      get(contactRef)
+      get(abouthomeRef)
         .then((snapshot) => {
           if (snapshot.val() !== null) {
-            const contactData = snapshot.val();
-            console.log(contactData);
-            formattedData = formatData(contactData);
+            const abouthomeData = snapshot.val();
+            console.log(abouthomeData);
+            formattedData = formatData(abouthomeData);
             console.log(formattedData);
 
             const rowsHTML = formattedData
               .map(
                 (item) => `
-    <tr>
-      <td>Contact Section</td>
-      <td style="width: 23%" class="project-actions text-center">
-        <a class="btn btn-info btn-sm" id="update" href="./edit/?id=${item.ID}">
-          <i class="fas fa-pencil-alt"> </i>
-          Düzəliş et
-        </a>
-        <a class="btn btn-danger btn-sm" id="remove" href="#" data-id="${item.ID}">
-          <i class="fas fa-trash"> </i>
-          Sil
-        </a>
-      </td>
-    </tr>
-  `
+        <tr>
+          <td>About (home) section</td>
+          <td style="width: 23%" class="project-actions text-center">
+            <a class="btn btn-info btn-sm" id="update" href="./edit/?id=${item.ID}">
+              <i class="fas fa-pencil-alt"> </i>
+              Düzəliş et
+            </a>
+            <a class="btn btn-danger btn-sm" id="remove" href="#" data-id="${item.ID}">
+              <i class="fas fa-trash"> </i>
+              Sil
+            </a>
+          </td>
+        </tr>
+      `
               )
               .join("");
             console.log(rowsHTML);
-            contactTable.innerHTML = rowsHTML;
+            abouthomeTable.innerHTML = rowsHTML;
 
             document.querySelectorAll("#remove").forEach((btn) => {
               btn.addEventListener("click", (event) => {
@@ -360,7 +360,7 @@
         });
 
       function RemoveData(id) {
-        remove(ref(db, `contact/${id}`))
+        remove(ref(db, `home-about/${id}`))
           .then(() => {
             const row = document
               .querySelector(`#remove[data-id="${id}"]`)
@@ -422,7 +422,6 @@
     <script src="../plugins/datatables-buttons/js/buttons.html5.min.js"></script>
     <script src="../plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
-    <script type="module" src="../../assets/js/firebase.js"></script>
     <script>
       $(function () {
         $("#example1")

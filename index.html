@@ -93,23 +93,7 @@
             <img src="./assets/images/RoboBand.png" alt="" />
           </div>
 
-          <ul class="about__list">
-            <li class="about__item">
-              <p class="about__description">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias,
-                labore!
-              </p>
-            </li>
-
-            <li class="about__item">
-              <p class="about__description">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias,
-                labore!
-              </p>
-            </li>
-
-            <a href="./about/" class="button gradient__button">Haqqımızda</a>
-          </ul>
+          <ul class="about__list"></ul>
         </div>
         <div class="about__img">
           <img src="./assets/images/RoboBand.png" alt="" />
@@ -121,78 +105,11 @@
         <div class="services__cards">
           <h1 class="services__title">Xidmətlərimiz</h1>
 
-          <ul class="services__list">
-            <li class="services__item">
-              <a href="./services/" class="services__link">
-                <div class="services__item--img">
-                  <img src="./assets/images/JVD-4987.jpg" alt="" />
-                </div>
-                <div class="services__item__info">
-                  <h3 class="services__item__title">Hazırlıq qrupları</h3>
-                  <p class="services__description">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Voluptatem, expedita!
-                  </p>
-                  <span class="services__readmore">Ətraflı bax..</span>
-                </div>
-              </a>
-            </li>
-
-            <li class="services__item">
-              <a href="./services/" class="services__link">
-                <div class="services__item--img">
-                  <img
-                    src="./assets/images/Pattern Drawing Machine.png"
-                    alt=""
-                  />
-                </div>
-                <div class="services__item__info">
-                  <h3 class="services__item__title">Mühəndislik qrupları</h3>
-                  <p class="services__description">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Voluptatem, expedita!
-                  </p>
-                  <span class="services__readmore">Ətraflı bax..</span>
-                </div>
-              </a>
-            </li>
-
-            <li class="services__item">
-              <a href="./services/" class="services__link">
-                <div class="services__item--img">
-                  <img src="./assets/images/JVD-2974.jpg" alt="" />
-                </div>
-                <div class="services__item__info">
-                  <h3 class="services__item__title">İngilis dili qrupları</h3>
-                  <p class="services__description">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Voluptatem, expedita!
-                  </p>
-                  <span class="services__readmore">Ətraflı bax..</span>
-                </div>
-              </a>
-            </li>
-
-            <li class="services__item">
-              <a href="./services/" class="services__link">
-                <div class="services__item--img">
-                  <img src="./assets/images/FP6B7945.JPG" alt="" />
-                </div>
-                <div class="services__item__info">
-                  <h3 class="services__item__title">Dərnəklər</h3>
-                  <p class="services__description">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Voluptatem, expedita!
-                  </p>
-                  <span class="services__readmore">Ətraflı bax..</span>
-                </div>
-              </a>
-            </li>
-          </ul>
+          <ul class="services__list"></ul>
         </div>
         <div class="services__button">
           <a href="./services/" class="button gradient__button"
-            >Xidmətlərimiz</a
+            >Bütün xidmətlərimiz</a
           >
         </div>
       </section>
@@ -348,10 +265,53 @@
           console.error(error);
         });
 
+      const abouthomeRef = ref(db, "home-about");
+      let aboutItem = document.querySelector(".about__list");
+
+      function formatAbouthomeData(abouthomeData) {
+        return Object.keys(abouthomeData).map((key) => {
+          return { ID: key, ...abouthomeData[key] };
+        });
+      }
+      get(abouthomeRef)
+        .then((snapshot) => {
+          if (snapshot.val() !== null) {
+            const abouthomeData = snapshot.val();
+            console.log(abouthomeData);
+            formattedData = formatAbouthomeData(abouthomeData);
+            console.log(formattedData);
+
+            const rowsHTML = formattedData
+              .map(
+                (item) => `
+                <li class="about__item">
+                  <p class="about__description">
+                    ${item.Text1}
+                  </p>
+                </li>
+                <li class="about__item">
+                  <p class="about__description">
+                    ${item.Text2}
+                  </p>
+                </li>
+                <a href="./about/" class="button gradient__button">Haqqımızda</a>
+                `
+              )
+              .join("");
+            console.log(rowsHTML);
+            aboutItem.innerHTML = rowsHTML;
+          } else {
+            console.log("no data");
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+
       const faqRef = ref(db, "faq");
       let faqCard = document.querySelector(".faq__cards");
 
-      function formatData(faqData) {
+      function formatFaqData(faqData) {
         return Object.keys(faqData).map((key) => {
           return { ID: key, ...faqData[key] };
         });
@@ -361,7 +321,7 @@
           if (snapshot.val() !== null) {
             const faqData = snapshot.val();
             console.log(faqData);
-            formattedData = formatData(faqData);
+            formattedData = formatFaqData(faqData);
             console.log(formattedData);
 
             const rowsHTML = formattedData
@@ -381,6 +341,52 @@
               .join("");
             console.log(rowsHTML);
             faqCard.innerHTML = rowsHTML;
+          } else {
+            console.log("no data");
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+
+      const servicesRef = ref(db, "services");
+      let servicesCards = document.querySelector(".services__list");
+
+      function formatData(servicesData) {
+        return Object.keys(servicesData).map((key) => {
+          return { ID: key, ...servicesData[key] };
+        });
+      }
+
+      get(servicesRef)
+        .then((snapshot) => {
+          if (snapshot.val() !== null) {
+            const servicesData = snapshot.val();
+            console.log(servicesData);
+            formattedData = formatData(servicesData);
+            console.log(formattedData);
+
+            // Limit the number of cards to 4
+            const limitedData = formattedData.slice(0, 4);
+
+            const rowsHTML = limitedData
+              .map(
+                (item) => `
+            <li class="services__item services__page--item">
+              <div class="services__link">
+                <div class="services__item--img">
+                  <img src="${item.Image}" alt="" />
+                </div>
+                <div class="services__item__info">
+                  <h3 class="services__item__title">${item.Title}</h3>
+                  <p class="services__description">${item.Description}</p>
+                </div>
+              </div>
+            </li>`
+              )
+              .join("");
+            console.log(rowsHTML);
+            servicesCards.innerHTML = rowsHTML;
           } else {
             console.log("no data");
           }

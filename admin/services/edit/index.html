@@ -109,7 +109,7 @@
             ></a>
           </li>
           <li class="nav-item d-none d-sm-inline-block">
-            <a href="./login.html" class="nav-link log-out">Çıxış et</a>
+            <a href="" class="nav-link log-out">Çıxış et</a>
           </li>
         </ul>
       </nav>
@@ -165,6 +165,12 @@
                     <a href="../../navbar/" class="nav-link">
                       <i class="far fa-circle nav-icon"></i>
                       <p>Navbar</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="home-about/" class="nav-link">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Haqqımızda (ana səhifə)</p>
                     </a>
                   </li>
                   <li class="nav-item">
@@ -229,7 +235,6 @@
                         type="file"
                         class="custom-file-input"
                         id="services-link-file"
-                        onchange="getImageData(event)"
                       />
                       <label class="custom-file-label" for="exampleInputFile"
                         >Xidmət şəkili</label
@@ -276,13 +281,13 @@
 
     <script>
       if (localStorage.getItem("adminLogin") != "true") {
-        location.href = "../../login.html";
+        location.href = "/admin/login.html";
       }
 
       let logOut = document.querySelector(".log-out");
       logOut.addEventListener("click", () => {
         localStorage.removeItem("adminLogin");
-        location.href = "../../login.html";
+        location.href = "/admin/login.html";
       });
     </script>
 
@@ -299,6 +304,13 @@
         ref,
       } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-database.js";
 
+      import {
+        getStorage,
+        ref as sRef,
+        getDownloadURL,
+        uploadBytesResumable,
+      } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-storage.js";
+
       const db = getDatabase();
 
       const urlParams = new URLSearchParams(window.location.search);
@@ -306,11 +318,52 @@
       console.log(id);
       let linkTitle = document.querySelector("#services-link-name");
       let linkImage = document.querySelector("#services-link-file");
+      let imgUrl;
       let linkDescription = document.querySelector(
         "#services-link-description"
       );
+      let imgLabel = document.querySelector(".custom-file-label");
 
       let editServicesLink = document.querySelector("#edit-services-link");
+
+      function GetFileName(file) {
+        var temp = file.name.split(".");
+        var fname = temp.slice(0, -1).join(".");
+        return fname;
+      }
+
+      function uploadImg() {
+        let serviceImg = linkImage.files[0];
+        console.log(serviceImg);
+
+        const metaData = {
+          contentType: serviceImg.type,
+        };
+
+        const storage = getStorage();
+
+        let imgStorageName = id + "__" + GetFileName(serviceImg);
+        const storageRef = sRef(storage, "images/" + imgStorageName);
+        const uploadTask = uploadBytesResumable(
+          storageRef,
+          serviceImg,
+          metaData
+        );
+
+        uploadTask.on(
+          "state-changed",
+          (snapshot) => {},
+          (error) => {
+            alert("error");
+          },
+          () => {
+            getDownloadURL(uploadTask.snapshot.ref).then((downloadUrl) => {
+              imgUrl = downloadUrl;
+              imgLabel.innerHTML = imgStorageName;
+            });
+          }
+        );
+      }
 
       const servicesRef = ref(db, `services/${id}`);
       get(servicesRef)
@@ -318,7 +371,7 @@
           if (snapshot.exists()) {
             const servicesData = snapshot.val();
             linkTitle.value = servicesData.Title || "";
-            linkImage.value = servicesData.Image || "";
+            imgUrl = servicesData.Image || "";
             linkDescription.value = servicesData.Description || "";
           }
         })
@@ -331,7 +384,7 @@
         set(ref(db, "services/" + id), {
           Title: linkTitle.value,
           ID: id,
-          Image: linkImage.value,
+          Image: imgUrl,
           Description: linkDescription.value,
         })
           .then(() => {
@@ -344,6 +397,7 @@
       }
 
       editServicesLink.addEventListener("click", UpdateData);
+      linkImage.addEventListener("change", uploadImg);
     </script>
 
     <!-- jQuery -->

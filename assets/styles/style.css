@@ -9,6 +9,7 @@
     --title-color: #4c4c54;
     --text-color: #4e4d50;
     --button-color: #fcc100;
+    --shadow-color: rgba(0, 0, 0, 0.05);
 
     --body-color: #fbf8f5;
     --section-color: #f5eeea;
@@ -374,12 +375,14 @@ button {
     background-color: var(--body-color);
     border-radius: .5rem;
     width: 320px;
-    transition: all 0.3s ease;
+    transition: all 0.3s ease-in-out;
     border: 1px solid var(--first-color);
 }
 
 .services__item:hover {
     border-color: var(--button-color);
+    box-shadow: 0px 0px 7px 2px var(--shadow-color);
+    transform: scale(1.05);
 }
 
 .services__item--img,

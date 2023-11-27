@@ -168,6 +168,12 @@
                     </a>
                   </li>
                   <li class="nav-item">
+                    <a href="home-about/" class="nav-link">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Haqqımızda (ana səhifə)</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
                     <a href="../../faq/" class="nav-link">
                       <i class="far fa-circle nav-icon"></i>
                       <p>FAQ</p>
@@ -260,13 +266,13 @@
 
     <script>
       if (localStorage.getItem("adminLogin") != "true") {
-        location.href = "../../login.html";
+        location.href = "/admin/login.html";
       }
 
       let logOut = document.querySelector(".log-out");
       logOut.addEventListener("click", () => {
         localStorage.removeItem("adminLogin");
-        location.href = "../../login.html";
+        location.href = "/admin/login.html";
       })
     </script>
 

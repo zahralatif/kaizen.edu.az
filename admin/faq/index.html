@@ -106,7 +106,7 @@
             ></a>
           </li>
           <li class="nav-item d-none d-sm-inline-block">
-            <a href="./login.html" class="nav-link log-out">Çıxış et</a>
+            <a href="" class="nav-link log-out">Çıxış et</a>
           </li>
         </ul>
       </nav>
@@ -162,6 +162,12 @@
                     <a href="../navbar/" class="nav-link">
                       <i class="far fa-circle nav-icon"></i>
                       <p>Navbar</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="home-about/" class="nav-link">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Haqqımızda (ana səhifə)</p>
                     </a>
                   </li>
                   <li class="nav-item">
@@ -273,13 +279,13 @@
 
     <script>
       if (localStorage.getItem("adminLogin") != "true") {
-        location.href = "../login.html";
+        location.href = "/admin/login.html";
       }
 
       let logOut = document.querySelector(".log-out");
       logOut.addEventListener("click", () => {
         localStorage.removeItem("adminLogin");
-        location.href = "../login.html";
+        location.href = "/admin/login.html";
       })
     </script>
 
