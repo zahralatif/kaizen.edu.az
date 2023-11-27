@@ -28,7 +28,7 @@ function accordion() {
 accordion();
 setTimeout(() => {
     accordion()
-}, 1000);
+}, 2000);
 
 const scrollUp = () => {
     const scrollUp = document.getElementById('scroll-up')
